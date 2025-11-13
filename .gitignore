@@ -208,3 +208,5 @@ __marimo__/
 
 # PDFs
 *.pdf
+# Key Pair file
+a3.pem
