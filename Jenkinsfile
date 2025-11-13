@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t flask-app:latest .'
+                sh 'docker build -t flask-k8s-ci-cd-assignment:latest .'
             }
         }
         stage('Deploy to Kubernetes') {
@@ -14,7 +14,8 @@ pipeline {
         }
         stage('Verify Deployment') {
             steps {
-                sh 'kubectl get pods,svc'
+                sh 'kubectl rollout status deployment/flask-deployment'
+                sh 'kubectl get pods'
             }
         }
     }
