@@ -41,13 +41,14 @@ pipeline {
             }
         }
 
-        post {
-            always {
-                echo "stopping minikube cluster" 
-                bat 'minikube stop' 
-            }
-        }
 
+    }
+    
+    post {
+        always {
+            echo "stopping minikube cluster" 
+            bat 'minikube stop' 
+        }
     }
 
 }
