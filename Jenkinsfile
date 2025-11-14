@@ -21,6 +21,33 @@ pipeline {
             }
         }
 
+        stage('deploy to kubernetes') {
+            steps {
+                echo "deploying to minikube k8s cluster" 
+                bat '''
+                kubectl apply -f "%WORKSPACE%\\kubernetes\\deployment.yaml"
+                kubectl apply -f "%WORKSPACE%\\kubernetes\\service.yaml"
+                '''
+            }
+        }
+
+        stage('verify deployment') {
+            steps {
+                bat '''
+                kubectl rollout status deployment/flask-deployment 
+                kubectl get pods 
+                kubectl get service
+                '''
+            }
+        }
+
+        post {
+            always {
+                echo "stopping minikube cluster" 
+                bat 'minikube stop' 
+            }
+        }
+
     }
 
 }
